@@ -6,6 +6,10 @@ Repository for the **Advanced Control System** course with all course assignment
 - **Simulink & Simscape Multibody** (required for robot visualization in Simulink)
 
 ## Repository Structure  
+
+📄 **finalRelation.pdf**  
+- PDF document containg the final relation
+
 📂 **Exercise/**  
 - Contains the first exercise, covering:  
   - Direct and inverse kinematics  
