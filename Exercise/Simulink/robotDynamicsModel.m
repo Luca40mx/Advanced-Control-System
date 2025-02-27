@@ -103,22 +103,7 @@ function robotDynamicsModel(block)
                 dq_init = block.DialogPrm(3).Data';
                 block.ContStates.Data = [q_init; dq_init];
 
-                function Start(block)
-
-                    simrobot = block.DialogPrm(1).Data;
-
-                    % Create persistent variables for function handles
-                    persistent B_func C_func g_func J_func
-
-                    B_func = matlabFunction(simrobot.BMatrix, 'Vars', simrobot.q);
-                    C_func = matlabFunction(simrobot.CMatrix, 'Vars', [simrobot.q, simrobot.dq]);
-                    g_func = matlabFunction(simrobot.GMatrix, 'Vars', simrobot.q);
-                    J_func = matlabFunction(simrobot.Jacobian.GeometricJacobian, 'Vars', simrobot.q);
-
-                    assignin('base', 'B_func', B_func);
-                    assignin('base', 'C_func', C_func);
-                    assignin('base', 'g_func', g_func);
-                    assignin('base', 'J_func', J_func);
+                function Start(~)
 
                     %end Start
 
@@ -142,7 +127,8 @@ function robotDynamicsModel(block)
                         %                      during simulation step
 
                         function Derivatives(block)
-
+                            
+                            simrobot = block.DialogPrm(1).Data;
                             states = block.ContStates.Data;
 
                             x1 = states(1:3);
@@ -150,18 +136,14 @@ function robotDynamicsModel(block)
                             tau = block.InputPort(1).Data;
                             he = block.InputPort(2).Data;
 
-                            B_func = evalin('base', 'B_func');
-                            C_func = evalin('base', 'C_func');
-                            g_func = evalin('base', 'g_func');
-                            J_func = evalin('base', 'J_func');
 
-                            B = B_func(x1(1), x1(2), x1(3));
-                            C = C_func(x1(1), x1(2), x1(3), x2(1), x2(2), x2(3));
-                            g = g_func(x1(1), x1(2), x1(3));
-                            J = J_func(x1(1), x1(2), x1(3));
+                            B = simrobot.func.Bmatrix(x1(1), x1(2), x1(3));
+                            C = simrobot.func.Cmatrix(x1(1), x1(2), x1(3), x2(1), x2(2), x2(3));
+                            g = simrobot.func.Gmatrix(x1(1), x1(2), x1(3));
+                            J_geometric = simrobot.func.GeometricJacobian(x1(1), x1(2), x1(3));
 
                             dx1 = x2;
-                            dx2 = B \ ((tau - J' * he) - C * x2 - g);
+                            dx2 = B \ ((tau - J_geometric' * he) - C * x2 - g);
 
                             block.Derivatives.Data = [dx1; dx2];
 
@@ -170,6 +152,6 @@ function robotDynamicsModel(block)
                             % Terminate:
                             %   Functionality    : Called at the end of simulation for cleanup
 
-                            function Terminate(block)
+                            function Terminate(~)
 
                                 %end Terminate
