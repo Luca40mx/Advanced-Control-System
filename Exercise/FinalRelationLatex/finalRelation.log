@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.2.8)  25 FEB 2025 13:23
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.2.8)  16 JUL 2025 16:43
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -631,116 +631,139 @@ Underfull \hbox (badness 10000) in paragraph at lines 443--444
 <../Simulink/Images/GravityCompensationControl.png, id=76, 992.20688pt x 669.2503pt>
 File: ../Simulink/Images/GravityCompensationControl.png Graphic file (type png)
 <use ../Simulink/Images/GravityCompensationControl.png>
-Package pdftex.def Info: ../Simulink/Images/GravityCompensationControl.png  used on input line 457.
+Package pdftex.def Info: ../Simulink/Images/GravityCompensationControl.png  used on input line 463.
 (pdftex.def)             Requested size: 552.0021pt x 372.32675pt.
 [10]
 <../Simulink/Images/InverseDynamicControl.png, id=81, 907.13907pt x 670.00313pt>
 File: ../Simulink/Images/InverseDynamicControl.png Graphic file (type png)
 <use ../Simulink/Images/InverseDynamicControl.png>
-Package pdftex.def Info: ../Simulink/Images/InverseDynamicControl.png  used on input line 468.
+Package pdftex.def Info: ../Simulink/Images/InverseDynamicControl.png  used on input line 478.
 (pdftex.def)             Requested size: 552.0021pt x 407.69942pt.
  [11 <../Simulink/Images/GravityCompensationControl.png>]
 <../Simulink/Images/GravityCompensationControl_operationalSpace.png, id=86, 907.13907pt x 670.00313pt>
 File: ../Simulink/Images/GravityCompensationControl_operationalSpace.png Graphic file (type png)
 <use ../Simulink/Images/GravityCompensationControl_operationalSpace.png>
-Package pdftex.def Info: ../Simulink/Images/GravityCompensationControl_operationalSpace.png  used on input line 476.
+Package pdftex.def Info: ../Simulink/Images/GravityCompensationControl_operationalSpace.png  used on input line 486.
 (pdftex.def)             Requested size: 552.0021pt x 407.69942pt.
  [12 <../Simulink/Images/InverseDynamicControl.png>]
 <../Simulink/Images/inverseDynamic2.png, id=91, 908.64468pt x 581.17125pt>
 File: ../Simulink/Images/inverseDynamic2.png Graphic file (type png)
 <use ../Simulink/Images/inverseDynamic2.png>
-Package pdftex.def Info: ../Simulink/Images/inverseDynamic2.png  used on input line 492.
+Package pdftex.def Info: ../Simulink/Images/inverseDynamic2.png  used on input line 502.
 (pdftex.def)             Requested size: 207.0021pt x 132.39845pt.
  [13 <../Simulink/Images/GravityCompensationControl_operationalSpace.png>]
 <../Simulink/Images/inverseDynamicOperationalSpaceReachablePosition.png, id=97, 992.20688pt x 670.00313pt>
 File: ../Simulink/Images/inverseDynamicOperationalSpaceReachablePosition.png Graphic file (type png)
 <use ../Simulink/Images/inverseDynamicOperationalSpaceReachablePosition.png>
-Package pdftex.def Info: ../Simulink/Images/inverseDynamicOperationalSpaceReachablePosition.png  used on input line 500.
+Package pdftex.def Info: ../Simulink/Images/inverseDynamicOperationalSpaceReachablePosition.png  used on input line 510.
 (pdftex.def)             Requested size: 482.9979pt x 326.14726pt.
  [14 <../Simulink/Images/inverseDynamic2.png> <../Simulink/Images/inverseDynamicOperationalSpaceReachablePosition.png>]
 <../Simulink/Images/inverseDynamic.png, id=103, 773.89125pt x 587.94656pt>
 File: ../Simulink/Images/inverseDynamic.png Graphic file (type png)
 <use ../Simulink/Images/inverseDynamic.png>
-Package pdftex.def Info: ../Simulink/Images/inverseDynamic.png  used on input line 514.
+Package pdftex.def Info: ../Simulink/Images/inverseDynamic.png  used on input line 524.
 (pdftex.def)             Requested size: 137.9979pt x 104.83896pt.
 <../Simulink/Images/inverseDynamic1.png, id=104, 770.12718pt x 584.93532pt>
 File: ../Simulink/Images/inverseDynamic1.png Graphic file (type png)
 <use ../Simulink/Images/inverseDynamic1.png>
-Package pdftex.def Info: ../Simulink/Images/inverseDynamic1.png  used on input line 521.
+Package pdftex.def Info: ../Simulink/Images/inverseDynamic1.png  used on input line 531.
 (pdftex.def)             Requested size: 137.9979pt x 104.81076pt.
 <../Simulink/Images/inverseDynamicOperationalSpaceNONreachablePosition.png, id=105, 992.20688pt x 670.00313pt>
 File: ../Simulink/Images/inverseDynamicOperationalSpaceNONreachablePosition.png Graphic file (type png)
 <use ../Simulink/Images/inverseDynamicOperationalSpaceNONreachablePosition.png>
-Package pdftex.def Info: ../Simulink/Images/inverseDynamicOperationalSpaceNONreachablePosition.png  used on input line 532.
+Package pdftex.def Info: ../Simulink/Images/inverseDynamicOperationalSpaceNONreachablePosition.png  used on input line 542.
 (pdftex.def)             Requested size: 552.0021pt x 372.74557pt.
  [15 <../Simulink/Images/inverseDynamic.png> <../Simulink/Images/inverseDynamic1.png>] [16 <../Simulink/Images/inverseDynamicOperationalSpaceNONreachablePosition.png>]
 <../Simulink/Images/passiveCompliance.png, id=115, 992.20688pt x 669.2503pt>
 File: ../Simulink/Images/passiveCompliance.png Graphic file (type png)
 <use ../Simulink/Images/passiveCompliance.png>
-Package pdftex.def Info: ../Simulink/Images/passiveCompliance.png  used on input line 557.
+Package pdftex.def Info: ../Simulink/Images/passiveCompliance.png  used on input line 567.
 (pdftex.def)             Requested size: 552.0021pt x 372.32675pt.
  [17 <../Simulink/Images/passiveCompliance.png>]
-LaTeX Font Info:    Trying to load font information for TS1+cmtt on input line 587.
+LaTeX Font Info:    Trying to load font information for TS1+cmtt on input line 597.
  (C:\Users\luca\AppData\Local\Programs\MiKTeX\tex/latex/base\ts1cmtt.fd
 File: ts1cmtt.fd 2023/04/13 v2.5m Standard LaTeX font definitions
 )
 <../Simulink/Images/activeCompliance.png, id=120, 992.20688pt x 669.2503pt>
 File: ../Simulink/Images/activeCompliance.png Graphic file (type png)
 <use ../Simulink/Images/activeCompliance.png>
-Package pdftex.def Info: ../Simulink/Images/activeCompliance.png  used on input line 612.
+Package pdftex.def Info: ../Simulink/Images/activeCompliance.png  used on input line 622.
 (pdftex.def)             Requested size: 552.0021pt x 372.32675pt.
  [18]
 <../Simulink/Images/force_control_inner_position.png, id=126, 1381.41093pt x 453.94594pt>
 File: ../Simulink/Images/force_control_inner_position.png Graphic file (type png)
 <use ../Simulink/Images/force_control_inner_position.png>
-Package pdftex.def Info: ../Simulink/Images/force_control_inner_position.png  used on input line 630.
+Package pdftex.def Info: ../Simulink/Images/force_control_inner_position.png  used on input line 640.
 (pdftex.def)             Requested size: 345.0pt x 113.36844pt.
  [19 <../Simulink/Images/activeCompliance.png>]
 <../Simulink/Images/force_control_inner_position_graph.png, id=132, 992.20688pt x 669.2503pt>
 File: ../Simulink/Images/force_control_inner_position_graph.png Graphic file (type png)
 <use ../Simulink/Images/force_control_inner_position_graph.png>
-Package pdftex.def Info: ../Simulink/Images/force_control_inner_position_graph.png  used on input line 638.
+Package pdftex.def Info: ../Simulink/Images/force_control_inner_position_graph.png  used on input line 648.
 (pdftex.def)             Requested size: 413.99895pt x 279.24506pt.
  [20 <../Simulink/Images/force_control_inner_position.png> <../Simulink/Images/force_control_inner_position_graph.png>]
 <../Simulink/Images/velocity_loop.png, id=138, 1397.97281pt x 417.05812pt>
 File: ../Simulink/Images/velocity_loop.png Graphic file (type png)
 <use ../Simulink/Images/velocity_loop.png>
-Package pdftex.def Info: ../Simulink/Images/velocity_loop.png  used on input line 659.
+Package pdftex.def Info: ../Simulink/Images/velocity_loop.png  used on input line 669.
 (pdftex.def)             Requested size: 345.0pt x 102.92151pt.
 <../Simulink/Images/innerVelocityLoop.png, id=139, 992.20688pt x 669.2503pt>
 File: ../Simulink/Images/innerVelocityLoop.png Graphic file (type png)
 <use ../Simulink/Images/innerVelocityLoop.png>
-Package pdftex.def Info: ../Simulink/Images/innerVelocityLoop.png  used on input line 667.
+Package pdftex.def Info: ../Simulink/Images/innerVelocityLoop.png  used on input line 677.
 (pdftex.def)             Requested size: 413.99895pt x 279.24506pt.
 <../Simulink/Images/parallelForce.png, id=140, 1402.48969pt x 489.32813pt>
 File: ../Simulink/Images/parallelForce.png Graphic file (type png)
 <use ../Simulink/Images/parallelForce.png>
-Package pdftex.def Info: ../Simulink/Images/parallelForce.png  used on input line 676.
+Package pdftex.def Info: ../Simulink/Images/parallelForce.png  used on input line 686.
 (pdftex.def)             Requested size: 345.0pt x 120.36803pt.
  [21 <../Simulink/Images/velocity_loop.png> <../Simulink/Images/innerVelocityLoop.png>]
 <../Simulink/Images/parallelForce_graph.png, id=146, 992.20688pt x 669.2503pt>
 File: ../Simulink/Images/parallelForce_graph.png Graphic file (type png)
 <use ../Simulink/Images/parallelForce_graph.png>
-Package pdftex.def Info: ../Simulink/Images/parallelForce_graph.png  used on input line 684.
+Package pdftex.def Info: ../Simulink/Images/parallelForce_graph.png  used on input line 694.
 (pdftex.def)             Requested size: 413.99895pt x 279.24506pt.
- [22 <../Simulink/Images/parallelForce.png> <../Simulink/Images/parallelForce_graph.png>] (finalRelation.aux)
+ [22 <../Simulink/Images/parallelForce.png> <../Simulink/Images/parallelForce_graph.png>]
+<../Simulink/Images/adaptiveControlRobot.png, id=152, 924.45375pt x 535.2497pt>
+File: ../Simulink/Images/adaptiveControlRobot.png Graphic file (type png)
+<use ../Simulink/Images/adaptiveControlRobot.png>
+Package pdftex.def Info: ../Simulink/Images/adaptiveControlRobot.png  used on input line 714.
+(pdftex.def)             Requested size: 345.0pt x 199.7544pt.
+ [23 <../Simulink/Images/adaptiveControlRobot.png>] [24]
+<../Simulink/Images/AdaptiveControl_scheme.png, id=160, 2280.26906pt x 876.27374pt>
+File: ../Simulink/Images/AdaptiveControl_scheme.png Graphic file (type png)
+<use ../Simulink/Images/AdaptiveControl_scheme.png>
+Package pdftex.def Info: ../Simulink/Images/AdaptiveControl_scheme.png  used on input line 826.
+(pdftex.def)             Requested size: 517.5pt x 198.86455pt.
+<../Simulink/Images/AdaptiveControl.png, id=161, 1677.76813pt x 1030.34938pt>
+File: ../Simulink/Images/AdaptiveControl.png Graphic file (type png)
+<use ../Simulink/Images/AdaptiveControl.png>
+Package pdftex.def Info: ../Simulink/Images/AdaptiveControl.png  used on input line 833.
+(pdftex.def)             Requested size: 517.5pt x 317.80138pt.
+ [25 <../Simulink/Images/AdaptiveControl_scheme.png>] [26 <../Simulink/Images/AdaptiveControl.png>]
+<../Simulink/Images/admittanceControlScheme.png, id=171, 2342.7525pt x 1146.53343pt>
+File: ../Simulink/Images/admittanceControlScheme.png Graphic file (type png)
+<use ../Simulink/Images/admittanceControlScheme.png>
+Package pdftex.def Info: ../Simulink/Images/admittanceControlScheme.png  used on input line 882.
+(pdftex.def)             Requested size: 517.5pt x 253.25282pt.
+ [27 <../Simulink/Images/admittanceControlScheme.png>] (finalRelation.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2020/03/25>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 23185 strings out of 474486
- 504240 string characters out of 5744228
+ 23225 strings out of 474486
+ 505885 string characters out of 5744228
  2057542 words of memory out of 5000000
- 45050 multiletter control sequences out of 15000+600000
- 564559 words of font info for 59 fonts, out of 8000000 for 9000
+ 45088 multiletter control sequences out of 15000+600000
+ 565178 words of font info for 61 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  99i,15n,118p,534b,1500s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\luca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tctt1000.pk> <C:\Users\luca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1000.pk><C:/Users/luca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/luca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/luca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/luca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/luca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/luca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Users/luca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/luca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/luca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/luca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/luca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/luca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/luca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/luca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/luca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on finalRelation.pdf (22 pages, 1537455 bytes).
+Output written on finalRelation.pdf (27 pages, 2419636 bytes).
 PDF statistics:
- 222 PDF objects out of 1000 (max. 8388607)
+ 246 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 194 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 214 words of extra memory for PDF output out of 10000 (max. 10000000)
 

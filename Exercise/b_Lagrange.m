@@ -204,9 +204,9 @@ C = simplify(sum(C_expanded, 3));
 g1 = mass1 * gravity' * j_linear_link1(1:3, 1) + mass2 * gravity' * j_linear_link2(1:3, 1) + mass3 * gravity' * j_linear_link3(1:3, 1);
 g2 = mass1 * gravity' * j_linear_link1(1:3, 2) + mass2 * gravity' * j_linear_link2(1:3, 2) + mass3 * gravity' * j_linear_link3(1:3, 2);
 g3 = mass1 * gravity' * j_linear_link1(1:3, 3) + mass2 * gravity' * j_linear_link2(1:3, 3) + mass3 * gravity' * j_linear_link3(1:3, 3);
-g = [g1; g2; g3];
+g = -[g1; g2; g3];
 
-tau_without_derivatives = B * [dd_theta1; dd_theta2; dd_theta3] + C * [d_theta1; d_theta2; d_theta3] - g;
+tau_without_derivatives = B * [dd_theta1; dd_theta2; dd_theta3] + C * [d_theta1; d_theta2; d_theta3] + g;
 
 disp("tau without derivatives:");
 disp(double(subs(tau_without_derivatives, [theta1 theta2 theta3 d_theta1 d_theta2 d_theta3 dd_theta1 dd_theta2 dd_theta3], [jointValues velocityValues accelerationValues]))); % numeric tau without derivatives
@@ -267,32 +267,31 @@ robotStructure.CenterOfMass.Link3 = com3; % symbolic
 
 robotStructure.RobotUrdf = robot; % from urdf file
 
-save('Simulink/robot.mat', 'robotStructure');
 
 %% for simulink, test for the plane
 
 % % plane
 % a = 0; b = 1; c = 0; d = 0.4;
-
+% 
 % pos_ee = subs(A_b_ee(1:3, 4), [theta1, theta2, theta3], jointValues);
-
+% 
 % x0 = pos_ee(1);
 % y0 = pos_ee(2);
 % z0 = pos_ee(3);
-
+% 
 % % distance
 % distance = (a * x0 + b * y0 + c * z0 + d) / sqrt(a ^ 2 + b ^ 2 + c ^ 2);
-
+% 
 % disp(['distance: ', num2str(double(distance))]);
-
+% 
 % figure(1);
-
+% 
 % show(robot, config);
 % hold on
-
+% 
 % [X, Z] = meshgrid(-1:0.1:1, -1:0.1:1);
 % Y = -d * ones(size(X));
-
+% 
 % hold on;
 % surf(X, Y, Z);
 
@@ -317,3 +316,28 @@ T_D_e = [Td(1:3, 1:3)' * Te(1:3, 1:3), Td(1:3, 1:3)' * (Te(1:3, 4) - Td(1:3, 4))
 
 Jad = inv(Ta) * blkdiag(Td(1:3, 1:3)', Td(1:3, 1:3)') * J_analytical; %#ok<*MINV>
 Jad_transpose = Jad.';
+
+
+
+%% For Adaptive Control --> some trajectories
+% A * sin(w*t)+phase
+
+syms t;
+
+A = pi/6;
+w = 2;
+phase= pi/6;
+
+q_ref = A*sin(w*t+phase);
+dq_ref = diff(q_ref);
+ddq_ref = diff(dq_ref);
+
+robotStructure.func.q_ref = matlabFunction(q_ref,Vars=t);
+robotStructure.func.dq_ref = matlabFunction(dq_ref,Vars=t);
+robotStructure.func.ddq_ref = matlabFunction(ddq_ref,Vars=t);
+
+
+
+
+
+save('Simulink/robot.mat', 'robotStructure');

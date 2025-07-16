@@ -19,7 +19,7 @@ function robotDynamicsModel(block)
     function setup(block)
 
         % Register number of ports
-        block.NumInputPorts = 2; % tau
+        block.NumInputPorts = 2; % tau, he
         block.NumOutputPorts = 2; % q, dq
 
         % Setup port properties to be inherited or dynamic

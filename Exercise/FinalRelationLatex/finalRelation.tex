@@ -452,6 +452,12 @@ accelerationValues = $[4, 1, 2]$
 
 \subsection{PD control law with gravity compensation in joint space}
 
+\begin{equation}
+    \mathbf{B}(q)\ddot{q} + \mathbf{C}(q, \dot{q})\dot{q} + \mathbf{F}\dot{q} + \mathbf{g}(q) = \mathbf{g}(q) + \mathbf{K}_P\tilde{q} - \mathbf{K}_D\dot{q}
+\end{equation}
+
+
+
 \begin{figure}[H]
     \centering
     \makebox[\textwidth][c]{\includegraphics[width=1.6\textwidth]{../Simulink/Images/GravityCompensationControl.png}}
@@ -462,6 +468,10 @@ accelerationValues = $[4, 1, 2]$
 
 
 \subsection{Inverse dynamic control law in joint space}
+
+\begin{equation}
+    \tau = \mathbf{B}(q)[\ddot{q}_d + K_D(\dot{q}_d - \dot{q}) + K_P(q_d - q)] + n(q, \dot{q})
+\end{equation}
 
 \begin{figure}[H]
     \centering
@@ -685,6 +695,216 @@ But if we use an integrator, we will have the zero error.
     \caption{parallel force/position control}
     \label{fig:parallelForce_graph}
 \end{figure}
+
+
+
+
+
+
+
+\subsection{Adaptive Control}
+\justify
+
+Adaptive control represents an advanced control strategy that addresses the challenge of system uncertainty
+by estimating unknown parameters during operation.
+This control approach is particularly valuable when dealing with systems whose dynamic parameters are not precisely known or may vary over time.
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=1\textwidth]{../Simulink/Images/adaptiveControlRobot.png}}
+    \caption{Adaptive control scheme}
+    \label{fig:adaptiveControl_robot}
+\end{figure}
+
+
+
+
+
+Traditional control schemes, such as the inverse dynamic control law in joint space:
+\begin{equation}
+    \tau = B(q)\ddot{q}_d + C(q, \dot{q})\dot{q}_d + g(q) + F\dot{q}_d + K_D\dot{\tilde{q}} + K_P\tilde{q}
+\end{equation}
+
+require precise knowledge of the dynamic parameters contained in the matrices $B(q)$, $C(q, \dot{q})$, and $g(q)$.
+However, in practice, \textbf{these parameters are often uncertain or imperfectly known}, which can significantly degrade control performance.
+
+The fundamental objective of adaptive control is to estimate the unknown dynamic parameters of a system while simultaneously minimizing the tracking error along a desired trajectory. This dual purpose makes adaptive control particularly suited for robotic applications where model uncertainties are common.
+
+\textbf{Parameter Estimation Strategy}
+
+When the exact dynamic parameters are unknown, we can introduce parameter estimation into the control law. Consider the modified control equation where we replace the unknown parameters with their estimates:
+
+\begin{equation}
+    \tau = B(q)\ddot{q}_r + C(q, \dot{q})\dot{q}_r + F\dot{q}_r + g(q) + K_D\sigma = Y(q, \dot{q}, \dot{q}_r, \ddot{q}_r)\hat{\Theta} + K_D\sigma
+\end{equation}
+
+where:
+\begin{itemize}
+    \item $\hat{\Theta}$ represents the vector of estimated parameters
+    \item $Y(q, \dot{q}, \dot{q}_r, \ddot{q}_r)$ is the regressor matrix that relates the parameters to the dynamics
+    \item $\sigma = \dot{\tilde{q}} + \Lambda\tilde{q}$ is a filtered tracking error
+    \item $\dot{q}_r = \dot{q}_d - \Lambda\tilde{q}$ and $\ddot{q}_r = \ddot{q}_d - \Lambda\dot{\tilde{q}}$ are reference signals
+\end{itemize}
+
+\textbf{Parameter Update Law}
+
+The key innovation in adaptive control lies in the parameter update mechanism. The parameter estimation error is defined as:
+\begin{equation}
+    \tilde{\Theta} = \Theta - \hat{\Theta}
+\end{equation}
+
+where $\Theta$ represents the true (but unknown) parameter vector.
+
+The adaptive update law is designed to minimize this parameter error while ensuring system stability:
+\begin{equation}
+    \begin{cases}
+        \tau = Y(q, \dot{q}, \dot{q}_r, \ddot{q}_r)\hat{\Theta} + K_D\sigma \\
+        \dot{\hat{\Theta}} = \Gamma Y^T(q, \dot{q}, \dot{q}_r, \ddot{q}_r)\sigma
+    \end{cases}
+\end{equation}
+
+where $\Gamma = \Gamma^T \succ 0$ is a positive definite gain matrix that controls the rate of parameter convergence.
+
+
+The adaptive control law ensures that:
+\begin{enumerate}
+    \item The tracking error $\tilde{q}$ converges to zero as $t \to \infty$
+    \item The parameter estimates $\hat{\Theta}$ remain bounded
+    \item The closed-loop system is globally stable
+\end{enumerate}
+
+The parameter update law acts as a gradient descent algorithm on the tracking error, effectively adjusting the parameter estimates to minimize the discrepancy between the actual and desired system behavior.
+
+
+
+The adaptive control approach provides a systematic framework for handling parameter uncertainty in robotic systems, making it particularly valuable for applications where precise system identification is challenging or where parameters may vary during operation.
+
+
+To illustrate the concept, we consider a simple example of a 1 DOF arm with the following equations:
+
+\begin{equation}
+    I\ddot{q} + F\dot{q} + mgd \sin q = \tau
+    \label{eq:1dof_dynamics}
+\end{equation}
+
+where $G = mgd \sin q$ represents the gravitational term.
+
+This can be rewritten in the regressor matrix form as:
+
+\begin{equation}
+    \tau = \begin{bmatrix} \ddot{q} & \dot{q} & \sin q \end{bmatrix} \begin{bmatrix} I \\ F \\ G \end{bmatrix}
+\end{equation}
+
+where:
+\begin{itemize}
+    \item $Y(q,\dot{q},\ddot{q}) = \begin{bmatrix} \ddot{q} & \dot{q} & \sin q \end{bmatrix}$ is the regressor matrix
+    \item $\Theta = \begin{bmatrix} I \\ F \\ G \end{bmatrix}$ is the parameter vector containing inertia, friction, and gravity terms
+\end{itemize}
+
+In this case, the $\Theta$ vector is already linear, which simplifies the parameter estimation process. The adaptive control law can directly estimate these physical parameters using the update rule previously described.
+
+
+
+Substituting in the equation of the error signal:
+
+\begin{equation}
+    \tau = I\ddot{q}_r + F\dot{q}_r + mgd \sin q + K_D\sigma
+    \label{eq:adaptive_torque}
+\end{equation}
+
+where $G = mgd \sin q$ represents the gravitational term.
+
+For the first experiment, a sinusoidal trajectory was used. The real parameters $[I, F, G]$ are in order: $[3, 2, -4.164]$, starting from an initial estimation (initial condition of the integral) $[1, 1, -9.81]$.
+
+After an initial discrepancy, the parameters settle down to an almost steady number, and the position and velocity errors approach zero. Note that the parameters may not converge to the real ones, but are inside the null space of $Y(q, \dot{q}, \ddot{q}_r, \ddot{q}_r)$.
+
+In this case, the $Y$ function is missing the dependence on $\dot{q}$, because in our model there is no parameter multiplied by $\dot{q}$.
+
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=1.5\textwidth]{../Simulink/Images/AdaptiveControl_scheme.png}}
+    \caption{Adaptive control scheme}
+    \label{fig:adaptiveControl_graphh}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=1.5\textwidth]{../Simulink/Images/AdaptiveControl.png}}
+    \caption{Adaptive control scheme}
+    \label{fig:adaptiveControl_graph}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+\subsection{Admittance Control}
+\justify
+
+This scheme is used to achieve a compliant behavior of the manipulator, when there is no direct access to torque control. Basically, we measure the force at the tip, and compute a compliant frame $x_t$ starting from a desired frame $x_d$. We can control the stiffness of the robot against the environment by acting on the gain of the impedance control, that are different from the ones of the robot.
+
+In this way we can choose how the robot interacts with the environment, if the arm is in free-motion, the control is equal to an inverse dynamic control, where $x_t = x_d$.
+
+The compliance control is done by solving this equation:
+
+\begin{equation}
+    M_t\ddot{Z} + K_{Dt}\dot{Z} + K_{Pt}Z = h_e^d
+\end{equation}
+
+where
+
+\begin{equation}
+    Z = x_d - x_t = -\begin{bmatrix} O_{d,t} \\ \phi_{d,t} \end{bmatrix}
+\end{equation}
+
+so by rearranging the terms:
+
+\begin{equation}
+    \ddot{x}_t = M_t^{-1}(-h_e^d + K_d\dot{z} + k_p\dot{z} + M_t\ddot{x}_d)
+\end{equation}
+
+then we just need to double integrate to have $\dot{x}_t$ and $x_t$
+
+
+
+
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=1.5\textwidth]{../Simulink/Images/admittanceControlScheme.png}}
+    \caption{Admittance control scheme}
+    \label{fig:admittanceControl_graph}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
