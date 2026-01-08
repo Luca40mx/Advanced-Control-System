@@ -24,4 +24,4 @@
 \contentsline {subsubsection}{\numberline {5.6.2}Block scheme of force control with inner velocity loop}{21}{}%
 \contentsline {subsubsection}{\numberline {5.6.3}Block scheme of parallel force/position control}{22}{}%
 \contentsline {subsection}{\numberline {5.7}Adaptive Control}{23}{}%
-\contentsline {subsection}{\numberline {5.8}Admittance Control}{27}{}%
+\contentsline {subsection}{\numberline {5.8}Admittance Control}{28}{}%

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.2.8)  16 JUL 2025 16:43
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.2.8)  8 JAN 2026 09:16
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -733,37 +733,75 @@ Package pdftex.def Info: ../Simulink/Images/adaptiveControlRobot.png  used on in
 <../Simulink/Images/AdaptiveControl_scheme.png, id=160, 2280.26906pt x 876.27374pt>
 File: ../Simulink/Images/AdaptiveControl_scheme.png Graphic file (type png)
 <use ../Simulink/Images/AdaptiveControl_scheme.png>
-Package pdftex.def Info: ../Simulink/Images/AdaptiveControl_scheme.png  used on input line 826.
+Package pdftex.def Info: ../Simulink/Images/AdaptiveControl_scheme.png  used on input line 823.
 (pdftex.def)             Requested size: 517.5pt x 198.86455pt.
-<../Simulink/Images/AdaptiveControl.png, id=161, 1677.76813pt x 1030.34938pt>
-File: ../Simulink/Images/AdaptiveControl.png Graphic file (type png)
-<use ../Simulink/Images/AdaptiveControl.png>
-Package pdftex.def Info: ../Simulink/Images/AdaptiveControl.png  used on input line 833.
-(pdftex.def)             Requested size: 517.5pt x 317.80138pt.
- [25 <../Simulink/Images/AdaptiveControl_scheme.png>] [26 <../Simulink/Images/AdaptiveControl.png>]
-<../Simulink/Images/admittanceControlScheme.png, id=171, 2342.7525pt x 1146.53343pt>
+ [25]
+<../Simulink/Images/adaptiveControl_pos.png, id=165, 1595.20969pt x 493.0922pt>
+File: ../Simulink/Images/adaptiveControl_pos.png Graphic file (type png)
+<use ../Simulink/Images/adaptiveControl_pos.png>
+Package pdftex.def Info: ../Simulink/Images/adaptiveControl_pos.png  used on input line 831.
+(pdftex.def)             Requested size: 517.5pt x 159.95963pt.
+<../Simulink/Images/adaptiveControl_vel.png, id=166, 1598.97375pt x 500.62032pt>
+File: ../Simulink/Images/adaptiveControl_vel.png Graphic file (type png)
+<use ../Simulink/Images/adaptiveControl_vel.png>
+Package pdftex.def Info: ../Simulink/Images/adaptiveControl_vel.png  used on input line 835.
+(pdftex.def)             Requested size: 517.5pt x 162.01982pt.
+<../Simulink/Images/adaptiveControl_params.png, id=167, 1611.01875pt x 505.13719pt>
+File: ../Simulink/Images/adaptiveControl_params.png Graphic file (type png)
+<use ../Simulink/Images/adaptiveControl_params.png>
+Package pdftex.def Info: ../Simulink/Images/adaptiveControl_params.png  used on input line 839.
+(pdftex.def)             Requested size: 517.5pt x 162.26382pt.
+ [26 <../Simulink/Images/AdaptiveControl_scheme.png>]
+Overfull \vbox (72.92236pt too high) has occurred while \output is active []
+
+ [27 <../Simulink/Images/adaptiveControl_pos.png> <../Simulink/Images/adaptiveControl_vel.png> <../Simulink/Images/adaptiveControl_params.png>]
+<../Simulink/Images/admittanceControlScheme.png, id=178, 2342.7525pt x 1146.53343pt>
 File: ../Simulink/Images/admittanceControlScheme.png Graphic file (type png)
 <use ../Simulink/Images/admittanceControlScheme.png>
-Package pdftex.def Info: ../Simulink/Images/admittanceControlScheme.png  used on input line 882.
+Package pdftex.def Info: ../Simulink/Images/admittanceControlScheme.png  used on input line 886.
 (pdftex.def)             Requested size: 517.5pt x 253.25282pt.
- [27 <../Simulink/Images/admittanceControlScheme.png>] (finalRelation.aux)
+ [28]
+<../Simulink/Images/admittance_X.png, id=182, 2162.8303pt x 557.83406pt>
+File: ../Simulink/Images/admittance_X.png Graphic file (type png)
+<use ../Simulink/Images/admittance_X.png>
+Package pdftex.def Info: ../Simulink/Images/admittance_X.png  used on input line 894.
+(pdftex.def)             Requested size: 621.00105pt x 160.1675pt.
+<../Simulink/Images/admittance_Y.png, id=183, 1911.39093pt x 450.9347pt>
+File: ../Simulink/Images/admittance_Y.png Graphic file (type png)
+<use ../Simulink/Images/admittance_Y.png>
+Package pdftex.def Info: ../Simulink/Images/admittance_Y.png  used on input line 898.
+(pdftex.def)             Requested size: 621.00105pt x 146.50388pt.
+<../Simulink/Images/admittance_Z.png, id=184, 1978.39125pt x 462.97969pt>
+File: ../Simulink/Images/admittance_Z.png Graphic file (type png)
+<use ../Simulink/Images/admittance_Z.png>
+Package pdftex.def Info: ../Simulink/Images/admittance_Z.png  used on input line 902.
+(pdftex.def)             Requested size: 621.00105pt x 145.32365pt.
+<../Simulink/Images/admittance_forces_env.png, id=185, 2007.75093pt x 475.7775pt>
+File: ../Simulink/Images/admittance_forces_env.png Graphic file (type png)
+<use ../Simulink/Images/admittance_forces_env.png>
+Package pdftex.def Info: ../Simulink/Images/admittance_forces_env.png  used on input line 906.
+(pdftex.def)             Requested size: 621.00105pt x 147.1628pt.
+ [29 <../Simulink/Images/admittanceControlScheme.png>]
+Overfull \vbox (116.83691pt too high) has occurred while \output is active []
+
+ [30 <../Simulink/Images/admittance_X.png> <../Simulink/Images/admittance_Y.png> <../Simulink/Images/admittance_Z.png> <../Simulink/Images/admittance_forces_env.png>] (finalRelation.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2020/03/25>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 23225 strings out of 474486
- 505885 string characters out of 5744228
+ 23271 strings out of 474486
+ 507992 string characters out of 5744228
  2057542 words of memory out of 5000000
- 45088 multiletter control sequences out of 15000+600000
+ 45134 multiletter control sequences out of 15000+600000
  565178 words of font info for 61 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 99i,15n,118p,534b,1500s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 99i,15n,118p,650b,1500s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\luca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tctt1000.pk> <C:\Users\luca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1000.pk><C:/Users/luca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/luca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/luca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/luca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/luca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/luca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Users/luca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/luca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/luca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/luca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/luca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/luca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/luca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/luca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/luca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on finalRelation.pdf (27 pages, 2419636 bytes).
+Output written on finalRelation.pdf (30 pages, 2926458 bytes).
 PDF statistics:
- 246 PDF objects out of 1000 (max. 8388607)
+ 267 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 214 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 244 words of extra memory for PDF output out of 10000 (max. 10000000)
 

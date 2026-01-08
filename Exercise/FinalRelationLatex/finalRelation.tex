@@ -732,18 +732,17 @@ The fundamental objective of adaptive control is to estimate the unknown dynamic
 
 \textbf{Parameter Estimation Strategy}
 
-When the exact dynamic parameters are unknown, we can introduce parameter estimation into the control law. Consider the modified control equation where we replace the unknown parameters with their estimates:
-
+Consider the modified control equation where we replace the unknown parameters with their estimates:
 \begin{equation}
-    \tau = B(q)\ddot{q}_r + C(q, \dot{q})\dot{q}_r + F\dot{q}_r + g(q) + K_D\sigma = Y(q, \dot{q}, \dot{q}_r, \ddot{q}_r)\hat{\Theta} + K_D\sigma
+    \tau = \hat{B}(q)\ddot{q}_r + \hat{C}(q,\dot{q})\dot{q}_r + \hat{F}\dot{q}_r + \hat{g}(q) + K_D\sigma = Y(q, \dot{q}, \dot{q}_r, \ddot{q}_r)\hat{\Theta} + K_D\sigma
+    \label{eq:adaptive_control_law}
 \end{equation}
-
 where:
 \begin{itemize}
-    \item $\hat{\Theta}$ represents the vector of estimated parameters
-    \item $Y(q, \dot{q}, \dot{q}_r, \ddot{q}_r)$ is the regressor matrix that relates the parameters to the dynamics
-    \item $\sigma = \dot{\tilde{q}} + \Lambda\tilde{q}$ is a filtered tracking error
-    \item $\dot{q}_r = \dot{q}_d - \Lambda\tilde{q}$ and $\ddot{q}_r = \ddot{q}_d - \Lambda\dot{\tilde{q}}$ are reference signals
+    \item $\hat{\Theta}$ represents the vector of estimated parameters;
+    \item $Y(q, \dot{q}, \dot{q}_r, \ddot{q}_r)$ is the regressor matrix based on reference trajectories;
+    \item $\sigma = \dot{\tilde{q}} + \Lambda\tilde{q}$ is the composite tracking error;
+    \item $\dot{q}_r = \dot{q}_d + \Lambda\tilde{q}$ is the reference velocity and $\ddot{q}_r = \ddot{q}_d + \Lambda\dot{\tilde{q}}$ is the reference acceleration.
 \end{itemize}
 
 \textbf{Parameter Update Law}
@@ -780,26 +779,25 @@ The parameter update law acts as a gradient descent algorithm on the tracking er
 The adaptive control approach provides a systematic framework for handling parameter uncertainty in robotic systems, making it particularly valuable for applications where precise system identification is challenging or where parameters may vary during operation.
 
 
-To illustrate the concept, we consider a simple example of a 1 DOF arm with the following equations:
-
+To illustrate the concept, we consider a simple example of a 1-DoF arm with the following dynamic equation:
 \begin{equation}
     I\ddot{q} + F\dot{q} + mgd \sin q = \tau
-    \label{eq:1dof_dynamics}
 \end{equation}
-
-where $G = mgd \sin q$ represents the gravitational term.
-
-This can be rewritten in the regressor matrix form as:
-
+By defining the gravitational parameter constant as $G = mgd$, this can be rewritten in the linear regressor form as:
 \begin{equation}
-    \tau = \begin{bmatrix} \ddot{q} & \dot{q} & \sin q \end{bmatrix} \begin{bmatrix} I \\ F \\ G \end{bmatrix}
+    \tau = \begin{bmatrix} \ddot{q} & \dot{q} & \sin q \end{bmatrix} \begin{bmatrix} I \\ F \\ G \end{bmatrix} = Y(q, \dot{q}, \ddot{q})\Theta
 \end{equation}
+where $\Theta = [I, F, G]^T$ is the vector of constant parameters to be estimated.
 
-where:
-\begin{itemize}
-    \item $Y(q,\dot{q},\ddot{q}) = \begin{bmatrix} \ddot{q} & \dot{q} & \sin q \end{bmatrix}$ is the regressor matrix
-    \item $\Theta = \begin{bmatrix} I \\ F \\ G \end{bmatrix}$ is the parameter vector containing inertia, friction, and gravity terms
-\end{itemize}
+The adaptive control law replaces the actual coordinates with the reference ones in the regressor matrix and uses the estimated parameters $\hat{\Theta}$:
+\begin{equation}
+    \tau = \hat{I}\ddot{q}_r + \hat{F}\dot{q}_r + \widehat{G} \sin q + K_D\sigma
+    \label{eq:1dof_adaptive_law}
+\end{equation}
+Consequently, the update law for the parameters $\dot{\hat{\Theta}} = \Gamma Y^T \sigma$ becomes:
+\begin{equation}
+    \dot{\hat{\Theta}} = \begin{bmatrix} \dot{\hat{I}} \\ \dot{\hat{F}} \\ \dot{\hat{G}} \end{bmatrix} = \Gamma \begin{bmatrix} \ddot{q}_r \\ \dot{q}_r \\ \sin q \end{bmatrix} \sigma
+\end{equation}
 
 In this case, the $\Theta$ vector is already linear, which simplifies the parameter estimation process. The adaptive control law can directly estimate these physical parameters using the update rule previously described.
 
@@ -818,8 +816,7 @@ For the first experiment, a sinusoidal trajectory was used. The real parameters 
 
 After an initial discrepancy, the parameters settle down to an almost steady number, and the position and velocity errors approach zero. Note that the parameters may not converge to the real ones, but are inside the null space of $Y(q, \dot{q}, \ddot{q}_r, \ddot{q}_r)$.
 
-In this case, the $Y$ function is missing the dependence on $\dot{q}$, because in our model there is no parameter multiplied by $\dot{q}$.
-
+It is worth noting that while the gravitational term depends only on the position $q$, the inertial and friction terms in the adaptive control law explicitly depend on the reference trajectory $\dot{q}_r$ and $\ddot{q}_r$. The regressor used for the control law is therefore $Y(q, \dot{q}_r, \ddot{q}_r)$, ensuring that the parameter adaptation is driven by the tracking requirement.
 
 \begin{figure}[H]
     \centering
@@ -829,10 +826,22 @@ In this case, the $Y$ function is missing the dependence on $\dot{q}$, because i
 \end{figure}
 
 \begin{figure}[H]
-    \centering
-    \makebox[\textwidth][c]{\includegraphics[width=1.5\textwidth]{../Simulink/Images/AdaptiveControl.png}}
-    \caption{Adaptive control scheme}
-    \label{fig:adaptiveControl_graph}
+    \begin{figure}[H]
+        \centering
+        \makebox[\textwidth][c]{\includegraphics[width=1.5\textwidth]{../Simulink/Images/adaptiveControl_pos.png}}
+
+        \vspace{0.5cm}
+
+        \makebox[\textwidth][c]{\includegraphics[width=1.5\textwidth]{../Simulink/Images/adaptiveControl_vel.png}}
+
+        \vspace{0.5cm}
+
+        \makebox[\textwidth][c]{\includegraphics[width=1.5\textwidth]{../Simulink/Images/adaptiveControl_params.png }}
+
+        \vspace{0.5cm}
+
+        \caption{Adaptive control results. From top to bottom: Position tracking ($q$ vs $q_d$); Velocity tracking ($\dot{q}$ vs $\dot{q}_d$); Parameter estimation evolution $\hat{\Theta}(t)$. Note: In the bottom plot, 'param 1' (blue) corresponds to Inertia $\hat{I}$, 'param 2' (red) to Friction $\hat{F}$, and 'param 3' (yellow) to Gravity term $\hat{G}$. The estimates remain bounded as predicted by the theory.}        \label{fig:adaptiveControl_results}
+    \end{figure}
 \end{figure}
 
 
@@ -849,33 +858,28 @@ In this case, the $Y$ function is missing the dependence on $\dot{q}$, because i
 \subsection{Admittance Control}
 \justify
 
-This scheme is used to achieve a compliant behavior of the manipulator, when there is no direct access to torque control. Basically, we measure the force at the tip, and compute a compliant frame $x_t$ starting from a desired frame $x_d$. We can control the stiffness of the robot against the environment by acting on the gain of the impedance control, that are different from the ones of the robot.
-
-In this way we can choose how the robot interacts with the environment, if the arm is in free-motion, the control is equal to an inverse dynamic control, where $x_t = x_d$.
-
-The compliance control is done by solving this equation:
-
+The compliance control is done by solving the mechanical admittance equation (as seen in the slides):
 \begin{equation}
-    M_t\ddot{Z} + K_{Dt}\dot{Z} + K_{Pt}Z = h_e^d
+    M_t \ddot{\tilde{z}} + K_{D_t} \dot{\tilde{z}} + K_{P_t} \tilde{z} = h_e^d
+    \label{eq:admittance_eq}
 \end{equation}
-
-where
-
+where $M_t, K_{D_t}, K_{P_t}$ are the impedance parameters (Mass, Damping, Stiffness) and the error is defined as the deviation of the compliant frame $x_t$ from the desired frame $x_d$:
 \begin{equation}
-    Z = x_d - x_t = -\begin{bmatrix} O_{d,t} \\ \phi_{d,t} \end{bmatrix}
+    \tilde{z} = x_d - x_t = \begin{bmatrix} o_{d,t}^d \\ \phi_{d,t} \end{bmatrix}
 \end{equation}
-
-so by rearranging the terms:
-
+By rearranging the terms, we can compute the acceleration of the compliant frame $\ddot{x}_t$ needed for the inner motion control loop. Recalling that $\ddot{\tilde{z}} = \ddot{x}_d - \ddot{x}_t$:
 \begin{equation}
-    \ddot{x}_t = M_t^{-1}(-h_e^d + K_d\dot{z} + k_p\dot{z} + M_t\ddot{x}_d)
+    \ddot{x}_t = \ddot{x}_d + M_t^{-1} \left( h_e^d - K_{D_t} \dot{\tilde{z}} - K_{P_t} \tilde{z} \right)
 \end{equation}
-
-then we just need to double integrate to have $\dot{x}_t$ and $x_t$
-
-
+We then integrate $\ddot{x}_t$ twice to obtain $\dot{x}_t$ and $x_t$.
+The kinematic variables of the \textbf{compliant} frame $x_t$ are then sent as reference input to the inverse dynamics motion control.
 
 
+In the scheme, I highlighted in orange all the signals that differ from the original inverse dynamics control scheme. Regarding the environment interaction, we modeled a spring along the $x$ axis and a viscous friction effect along the $y$ and $z$ axes. The desired trajectory involves drawing a circle on the $(y, z)$ plane.
+
+The graph shows the desired frame $x_d$ and the resulting compliant frame $x_t$, which is computed based on the force measurements. The manipulator follows the compliant frame $x_t$, ensuring a compliant behavior determined by the impedance gains $K_{pt}, K_{dt}$ and the equivalent mass matrix $M_t$.
+
+Furthermore, the control law includes the force vector multiplied by the Jacobian transpose ($J^T h_e$). This term maps the end-effector wrench into joint torques to compensate for the external forces, allowing the robot to accurately track the compliant frame even during contact with the environment.
 
 \begin{figure}[H]
     \centering
@@ -885,7 +889,25 @@ then we just need to double integrate to have $\dot{x}_t$ and $x_t$
 \end{figure}
 
 
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=1.8\textwidth]{../Simulink/Images/admittance_X.png}}
 
+    \vspace{0.5cm}
+
+    \makebox[\textwidth][c]{\includegraphics[width=1.8\textwidth]{../Simulink/Images/admittance_Y.png}}
+
+    \vspace{0.5cm}
+
+    \makebox[\textwidth][c]{\includegraphics[width=1.8\textwidth]{../Simulink/Images/admittance_Z.png}}
+
+    \vspace{0.5cm}
+
+    \makebox[\textwidth][c]{\includegraphics[width=1.8\textwidth]{../Simulink/Images/admittance_forces_env.png}}
+
+    \caption{admittance control with environment contact forces}
+    \label{fig:admittance_control_results}
+\end{figure}
 
 
 

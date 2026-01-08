@@ -328,7 +328,8 @@ A = pi/6;
 w = 2;
 phase= pi/6;
 
-q_ref = A*sin(w*t+phase);
+% q_ref = A*sin(w*t+phase);
+q_ref = A*cos(w*t+phase);
 dq_ref = diff(q_ref);
 ddq_ref = diff(dq_ref);
 
