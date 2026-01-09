@@ -334,7 +334,7 @@ Recalling that the gravity vector is $g_0 = [0, 0, -9.81]$.
 \section{Third homework: Equations of motion}
 \justify
 
-\subsection{$\tau$ with derivatives}
+\subsection{$\tau$, with kinetic and potential energy}
 
 The lagrangian of a system is defined as the sum between the kinetic energy and the potential energy of the system.
 \begin{equation}
@@ -364,7 +364,7 @@ If we substitute the values for the joints, elocities and acceleration, we obtai
     \end{bmatrix}
 \end{equation}
 
-\subsection{$\tau$ without derivatives}
+\subsection{$\tau$ with Coriolis, centrifugal and gravity terms}
 
 If we don's want to compute all this derivatives, we have an other way to compute the torques, using the Coriolis and centrifugal matrices and the gravity vector.
 As we'll see the results for the torques are the same.
@@ -456,6 +456,12 @@ accelerationValues = $[4, 1, 2]$
     \mathbf{B}(q)\ddot{q} + \mathbf{C}(q, \dot{q})\dot{q} + \mathbf{F}\dot{q} + \mathbf{g}(q) = \mathbf{g}(q) + \mathbf{K}_P\tilde{q} - \mathbf{K}_D\dot{q}
 \end{equation}
 
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=1.6\textwidth]{../Simulink/Images/gravity_compensation_joint_space.png}}
+    \caption{PD control law with gravity compensation in joint space}
+    \label{fig:gravity_compensation_joint_spacee}
+\end{figure}
 
 
 \begin{figure}[H]
@@ -466,6 +472,7 @@ accelerationValues = $[4, 1, 2]$
 \end{figure}
 
 
+\newpage
 
 \subsection{Inverse dynamic control law in joint space}
 
@@ -475,12 +482,29 @@ accelerationValues = $[4, 1, 2]$
 
 \begin{figure}[H]
     \centering
+    \makebox[\textwidth][c]{\includegraphics[width=1.6\textwidth]{../Simulink/Images/inverse_dynamic_joint_space.png}}
+    \caption{Inverse dynamic control law in joint space}
+    \label{fig:inverse_dynamic_joint_space}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
     \makebox[\textwidth][c]{\includegraphics[width=1.6\textwidth]{../Simulink/Images/InverseDynamicControl.png}}
     \caption{Inverse dynamic control law in joint space}
     \label{fig:Inverse dynamic control law in joint space}
 \end{figure}
 
+\newpage
 \subsection{PD control law with gravity compensation in the operational space}
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=1.6\textwidth]{../Simulink/Images/gravity_compensation_operational_space.png}}
+    \caption{PD control law with gravity compensation in the operational space}
+    \label{fig:gravity_compensation_operational_space}
+\end{figure}
+
+
 \begin{figure}[H]
     \centering
     \makebox[\textwidth][c]{\includegraphics[width=1.6\textwidth]{../Simulink/Images/GravityCompensationControl_operationalSpace.png}}
@@ -493,7 +517,17 @@ accelerationValues = $[4, 1, 2]$
 
 \subsection{Inverse dynamic control law in the operational space}
 
+
 Here I study two different cases: the first one is the case where the robot can reach the configuration, and the second one is the case where the robot cannot reach the configuration.
+
+
+\begin{figure}
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=1.6\textwidth]{../Simulink/Images/inverse_dynamic_operational_space.png}}
+    \caption{Inverse dynamic control law in the operational space}
+    \label{fig:inverse_dynamic_operational_space}
+\end{figure}
+
 
 In the first one we have:
 
@@ -564,6 +598,13 @@ Off course the robot in both cases will not reach the desired position, due to t
 
 \begin{figure}[H]
     \centering
+    \makebox[\textwidth][c]{\includegraphics[width=1.6\textwidth]{../Simulink/Images/passive_compliance_control.png}}
+    \caption{passive compliance control scheme}
+    \label{fig:passive_compliance_control}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
     \makebox[\textwidth][c]{\includegraphics[width=1.6\textwidth]{../Simulink/Images/passiveCompliance.png}}
     \caption{passiveCompliance}
     \label{fig:passiveCompliance}
@@ -584,7 +625,7 @@ In particular we use this particular Jacobian, derivative from this formula:
     \dot{\tilde{x}} = -T_A^{-1}(\phi_{d,e}) \begin{bmatrix} R_d^T & O \\ O & R_d^T \end{bmatrix} J(q) \dot{q} = -J_{Ad}(q, \tilde{x}) \dot{q}
 \end{equation}
 
-In super important to understand that the T matrix, is the transformation matrix from the end effector to the desired position, as reported in the matlab code below:
+Is super important to understand that the T matrix, is the transformation matrix from the end effector to the desired position, as reported in the matlab code below:
 
 \begin{lstlisting}[style=Matlab-editor]
 Td = [eye(3), desired_position; 
@@ -615,6 +656,12 @@ block.OutputPort(1).Data = Jad(1:3, 1:3);
 
 \end{lstlisting}
 
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=1.6\textwidth]{../Simulink/Images/active_compliance_control.png}}
+    \caption{active compliance control scheme}
+    \label{fig:active_compliance_control}
+\end{figure}
 
 
 \begin{figure}[H]
@@ -640,6 +687,13 @@ As expected we have an error on the second joint, where the "spring" of the wall
     \makebox[\textwidth][c]{\includegraphics[width=1\textwidth]{../Simulink/Images/force_control_inner_position.png}}
     \caption{Block scheme of force control with inner position loop.}
     \label{fig:Block scheme of force control with inner position loop.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{../Simulink/Images/force_control_inner_position_loop.png}}
+    \caption{force control inner position}
+    \label{fig:force_control_inner_position_loop}
 \end{figure}
 
 
@@ -671,6 +725,13 @@ But if we use an integrator, we will have the zero error.
     \label{fig:Block scheme of force control with inner velocity loop.}
 \end{figure}
 
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{../Simulink/Images/force_control_inner_velocity_loop.png}}
+    \caption{force control inner velocity loop}
+    \label{fig:force_control_inner_velocity_loop}
+\end{figure}
+
 
 \begin{figure}[H]
     \centering
@@ -681,11 +742,20 @@ But if we use an integrator, we will have the zero error.
 
 
 \subsubsection{Block scheme of parallel force/position control}
+
 \begin{figure}[H]
     \centering
     \makebox[\textwidth][c]{\includegraphics[width=1\textwidth]{../Simulink/Images/parallelForce.png}}
     \caption{Block scheme of parallel force/position control.}
     \label{fig:parallelForce}
+\end{figure}
+
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{../Simulink/Images/parallel_force_control.png}}
+    \caption{parallel force/position control scheme}
+    \label{fig:parallel_force_control}
 \end{figure}
 
 
