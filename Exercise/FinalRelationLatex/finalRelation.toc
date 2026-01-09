@@ -16,12 +16,12 @@
 \contentsline {section}{\numberline {5}Control Scheme}{10}{}%
 \contentsline {subsection}{\numberline {5.1}PD control law with gravity compensation in joint space}{10}{}%
 \contentsline {subsection}{\numberline {5.2}Inverse dynamic control law in joint space}{13}{}%
-\contentsline {subsection}{\numberline {5.3}PD control law with gravity compensation in the operational space}{15}{}%
-\contentsline {subsection}{\numberline {5.4}Inverse dynamic control law in the operational space}{16}{}%
-\contentsline {subsection}{\numberline {5.5}Compliance control}{21}{}%
-\contentsline {subsection}{\numberline {5.6}Force control}{26}{}%
-\contentsline {subsubsection}{\numberline {5.6.1}Block scheme of force control with inner position loop}{26}{}%
-\contentsline {subsubsection}{\numberline {5.6.2}Block scheme of force control with inner velocity loop}{27}{}%
-\contentsline {subsubsection}{\numberline {5.6.3}Block scheme of parallel force/position control}{29}{}%
-\contentsline {subsection}{\numberline {5.7}Adaptive Control}{30}{}%
-\contentsline {subsection}{\numberline {5.8}Admittance Control}{35}{}%
+\contentsline {subsection}{\numberline {5.3}Adaptive Control}{15}{}%
+\contentsline {subsection}{\numberline {5.4}PD control law with gravity compensation in the operational space}{20}{}%
+\contentsline {subsection}{\numberline {5.5}Inverse dynamic control law in the operational space}{21}{}%
+\contentsline {subsection}{\numberline {5.6}Compliance control}{26}{}%
+\contentsline {subsection}{\numberline {5.7}Force control}{31}{}%
+\contentsline {subsubsection}{\numberline {5.7.1}Block scheme of force control with inner position loop}{31}{}%
+\contentsline {subsubsection}{\numberline {5.7.2}Block scheme of force control with inner velocity loop}{32}{}%
+\contentsline {subsubsection}{\numberline {5.7.3}Block scheme of parallel force/position control}{34}{}%
+\contentsline {subsection}{\numberline {5.8}Admittance Control}{36}{}%

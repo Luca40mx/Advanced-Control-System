@@ -494,6 +494,162 @@ accelerationValues = $[4, 1, 2]$
     \label{fig:Inverse dynamic control law in joint space}
 \end{figure}
 
+
+
+\newpage
+\subsection{Adaptive Control}
+\justify
+
+Adaptive control represents an advanced control strategy that addresses the challenge of system uncertainty
+by estimating unknown parameters during operation.
+This control approach is particularly valuable when dealing with systems whose dynamic parameters are not precisely known or may vary over time.
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=1\textwidth]{../Simulink/Images/adaptiveControlRobot.png}}
+    \caption{Adaptive control scheme}
+    \label{fig:adaptiveControl_robot}
+\end{figure}
+
+
+
+
+
+Traditional control schemes, such as the inverse dynamic control law in joint space:
+\begin{equation}
+    \tau = B(q)\ddot{q}_d + C(q, \dot{q})\dot{q}_d + g(q) + F\dot{q}_d + K_D\dot{\tilde{q}} + K_P\tilde{q}
+\end{equation}
+
+require precise knowledge of the dynamic parameters contained in the matrices $B(q)$, $C(q, \dot{q})$, and $g(q)$.
+However, in practice, \textbf{these parameters are often uncertain or imperfectly known}, which can significantly degrade control performance.
+
+The fundamental objective of adaptive control is to estimate the unknown dynamic parameters of a system while simultaneously minimizing the tracking error along a desired trajectory. This dual purpose makes adaptive control particularly suited for robotic applications where model uncertainties are common.
+
+\textbf{Parameter Estimation Strategy}
+
+Consider the modified control equation where we replace the unknown parameters with their estimates:
+\begin{equation}
+    \tau = \hat{B}(q)\ddot{q}_r + \hat{C}(q,\dot{q})\dot{q}_r + \hat{F}\dot{q}_r + \hat{g}(q) + K_D\sigma = Y(q, \dot{q}, \dot{q}_r, \ddot{q}_r)\hat{\Theta} + K_D\sigma
+    \label{eq:adaptive_control_law}
+\end{equation}
+where:
+\begin{itemize}
+    \item $\hat{\Theta}$ represents the vector of estimated parameters;
+    \item $Y(q, \dot{q}, \dot{q}_r, \ddot{q}_r)$ is the regressor matrix based on reference trajectories;
+    \item $\sigma = \dot{\tilde{q}} + \Lambda\tilde{q}$ is the composite tracking error;
+    \item $\dot{q}_r = \dot{q}_d + \Lambda\tilde{q}$ is the reference velocity and $\ddot{q}_r = \ddot{q}_d + \Lambda\dot{\tilde{q}}$ is the reference acceleration.
+\end{itemize}
+
+\textbf{Parameter Update Law}
+
+The key innovation in adaptive control lies in the parameter update mechanism. The parameter estimation error is defined as:
+\begin{equation}
+    \tilde{\Theta} = \Theta - \hat{\Theta}
+\end{equation}
+
+where $\Theta$ represents the true (but unknown) parameter vector.
+
+The adaptive update law is designed to minimize this parameter error while ensuring system stability:
+\begin{equation}
+    \begin{cases}
+        \tau = Y(q, \dot{q}, \dot{q}_r, \ddot{q}_r)\hat{\Theta} + K_D\sigma \\
+        \dot{\hat{\Theta}} = \Gamma Y^T(q, \dot{q}, \dot{q}_r, \ddot{q}_r)\sigma
+    \end{cases}
+\end{equation}
+
+where $\Gamma = \Gamma^T \succ 0$ is a positive definite gain matrix that controls the rate of parameter convergence.
+
+
+The adaptive control law ensures that:
+\begin{enumerate}
+    \item The tracking error $\tilde{q}$ converges to zero as $t \to \infty$
+    \item The parameter estimates $\hat{\Theta}$ remain bounded
+    \item The closed-loop system is globally stable
+\end{enumerate}
+
+The parameter update law acts as a gradient descent algorithm on the tracking error, effectively adjusting the parameter estimates to minimize the discrepancy between the actual and desired system behavior.
+
+
+
+The adaptive control approach provides a systematic framework for handling parameter uncertainty in robotic systems, making it particularly valuable for applications where precise system identification is challenging or where parameters may vary during operation.
+
+
+To illustrate the concept, we consider a simple example of a 1-DoF arm with the following dynamic equation:
+\begin{equation}
+    I\ddot{q} + F\dot{q} + mgd \sin q = \tau
+\end{equation}
+By defining the gravitational parameter constant as $G = mgd$, this can be rewritten in the linear regressor form as:
+\begin{equation}
+    \tau = \begin{bmatrix} \ddot{q} & \dot{q} & \sin q \end{bmatrix} \begin{bmatrix} I \\ F \\ G \end{bmatrix} = Y(q, \dot{q}, \ddot{q})\Theta
+\end{equation}
+where $\Theta = [I, F, G]^T$ is the vector of constant parameters to be estimated.
+
+The adaptive control law replaces the actual coordinates with the reference ones in the regressor matrix and uses the estimated parameters $\hat{\Theta}$:
+\begin{equation}
+    \tau = \hat{I}\ddot{q}_r + \hat{F}\dot{q}_r + \widehat{G} \sin q + K_D\sigma
+    \label{eq:1dof_adaptive_law}
+\end{equation}
+Consequently, the update law for the parameters $\dot{\hat{\Theta}} = \Gamma Y^T \sigma$ becomes:
+\begin{equation}
+    \dot{\hat{\Theta}} = \begin{bmatrix} \dot{\hat{I}} \\ \dot{\hat{F}} \\ \dot{\hat{G}} \end{bmatrix} = \Gamma \begin{bmatrix} \ddot{q}_r \\ \dot{q}_r \\ \sin q \end{bmatrix} \sigma
+\end{equation}
+
+In this case, the $\Theta$ vector is already linear, which simplifies the parameter estimation process. The adaptive control law can directly estimate these physical parameters using the update rule previously described.
+
+
+
+Substituting in the equation of the error signal:
+
+\begin{equation}
+    \tau = I\ddot{q}_r + F\dot{q}_r + mgd \sin q + K_D\sigma
+    \label{eq:adaptive_torque}
+\end{equation}
+
+where $G = mgd \sin q$ represents the gravitational term.
+
+For the first experiment, a sinusoidal trajectory was used. The real parameters $[I, F, G]$ are in order: $[3, 2, -4.164]$, starting from an initial estimation (initial condition of the integral) $[1, 1, -9.81]$.
+
+After an initial discrepancy, the parameters settle down to an almost steady number, and the position and velocity errors approach zero. Note that the parameters may not converge to the real ones, but are inside the null space of $Y(q, \dot{q}, \ddot{q}_r, \ddot{q}_r)$.
+
+It is worth noting that while the gravitational term depends only on the position $q$, the inertial and friction terms in the adaptive control law explicitly depend on the reference trajectory $\dot{q}_r$ and $\ddot{q}_r$. The regressor used for the control law is therefore $Y(q, \dot{q}_r, \ddot{q}_r)$, ensuring that the parameter adaptation is driven by the tracking requirement.
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=1.5\textwidth]{../Simulink/Images/AdaptiveControl_scheme.png}}
+    \caption{Adaptive control scheme}
+    \label{fig:adaptiveControl_graphh}
+\end{figure}
+
+\begin{figure}[H]
+    \begin{figure}[H]
+        \centering
+        \makebox[\textwidth][c]{\includegraphics[width=1.5\textwidth]{../Simulink/Images/adaptiveControl_pos.png}}
+
+        \vspace{0.5cm}
+
+        \makebox[\textwidth][c]{\includegraphics[width=1.5\textwidth]{../Simulink/Images/adaptiveControl_vel.png}}
+
+        \vspace{0.5cm}
+
+        \makebox[\textwidth][c]{\includegraphics[width=1.5\textwidth]{../Simulink/Images/adaptiveControl_params.png }}
+
+        \vspace{0.5cm}
+
+        \caption{Adaptive control results. From top to bottom: Position tracking ($q$ vs $q_d$); Velocity tracking ($\dot{q}$ vs $\dot{q}_d$); Parameter estimation evolution $\hat{\Theta}(t)$. Note: In the bottom plot, 'param 1' (blue) corresponds to Inertia $\hat{I}$, 'param 2' (red) to Friction $\hat{F}$, and 'param 3' (yellow) to Gravity term $\hat{G}$. The estimates remain bounded as predicted by the theory.}        \label{fig:adaptiveControl_results}
+    \end{figure}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
 \newpage
 \subsection{PD control law with gravity compensation in the operational space}
 
@@ -771,148 +927,6 @@ But if we use an integrator, we will have the zero error.
 
 
 
-
-\subsection{Adaptive Control}
-\justify
-
-Adaptive control represents an advanced control strategy that addresses the challenge of system uncertainty
-by estimating unknown parameters during operation.
-This control approach is particularly valuable when dealing with systems whose dynamic parameters are not precisely known or may vary over time.
-
-\begin{figure}[H]
-    \centering
-    \makebox[\textwidth][c]{\includegraphics[width=1\textwidth]{../Simulink/Images/adaptiveControlRobot.png}}
-    \caption{Adaptive control scheme}
-    \label{fig:adaptiveControl_robot}
-\end{figure}
-
-
-
-
-
-Traditional control schemes, such as the inverse dynamic control law in joint space:
-\begin{equation}
-    \tau = B(q)\ddot{q}_d + C(q, \dot{q})\dot{q}_d + g(q) + F\dot{q}_d + K_D\dot{\tilde{q}} + K_P\tilde{q}
-\end{equation}
-
-require precise knowledge of the dynamic parameters contained in the matrices $B(q)$, $C(q, \dot{q})$, and $g(q)$.
-However, in practice, \textbf{these parameters are often uncertain or imperfectly known}, which can significantly degrade control performance.
-
-The fundamental objective of adaptive control is to estimate the unknown dynamic parameters of a system while simultaneously minimizing the tracking error along a desired trajectory. This dual purpose makes adaptive control particularly suited for robotic applications where model uncertainties are common.
-
-\textbf{Parameter Estimation Strategy}
-
-Consider the modified control equation where we replace the unknown parameters with their estimates:
-\begin{equation}
-    \tau = \hat{B}(q)\ddot{q}_r + \hat{C}(q,\dot{q})\dot{q}_r + \hat{F}\dot{q}_r + \hat{g}(q) + K_D\sigma = Y(q, \dot{q}, \dot{q}_r, \ddot{q}_r)\hat{\Theta} + K_D\sigma
-    \label{eq:adaptive_control_law}
-\end{equation}
-where:
-\begin{itemize}
-    \item $\hat{\Theta}$ represents the vector of estimated parameters;
-    \item $Y(q, \dot{q}, \dot{q}_r, \ddot{q}_r)$ is the regressor matrix based on reference trajectories;
-    \item $\sigma = \dot{\tilde{q}} + \Lambda\tilde{q}$ is the composite tracking error;
-    \item $\dot{q}_r = \dot{q}_d + \Lambda\tilde{q}$ is the reference velocity and $\ddot{q}_r = \ddot{q}_d + \Lambda\dot{\tilde{q}}$ is the reference acceleration.
-\end{itemize}
-
-\textbf{Parameter Update Law}
-
-The key innovation in adaptive control lies in the parameter update mechanism. The parameter estimation error is defined as:
-\begin{equation}
-    \tilde{\Theta} = \Theta - \hat{\Theta}
-\end{equation}
-
-where $\Theta$ represents the true (but unknown) parameter vector.
-
-The adaptive update law is designed to minimize this parameter error while ensuring system stability:
-\begin{equation}
-    \begin{cases}
-        \tau = Y(q, \dot{q}, \dot{q}_r, \ddot{q}_r)\hat{\Theta} + K_D\sigma \\
-        \dot{\hat{\Theta}} = \Gamma Y^T(q, \dot{q}, \dot{q}_r, \ddot{q}_r)\sigma
-    \end{cases}
-\end{equation}
-
-where $\Gamma = \Gamma^T \succ 0$ is a positive definite gain matrix that controls the rate of parameter convergence.
-
-
-The adaptive control law ensures that:
-\begin{enumerate}
-    \item The tracking error $\tilde{q}$ converges to zero as $t \to \infty$
-    \item The parameter estimates $\hat{\Theta}$ remain bounded
-    \item The closed-loop system is globally stable
-\end{enumerate}
-
-The parameter update law acts as a gradient descent algorithm on the tracking error, effectively adjusting the parameter estimates to minimize the discrepancy between the actual and desired system behavior.
-
-
-
-The adaptive control approach provides a systematic framework for handling parameter uncertainty in robotic systems, making it particularly valuable for applications where precise system identification is challenging or where parameters may vary during operation.
-
-
-To illustrate the concept, we consider a simple example of a 1-DoF arm with the following dynamic equation:
-\begin{equation}
-    I\ddot{q} + F\dot{q} + mgd \sin q = \tau
-\end{equation}
-By defining the gravitational parameter constant as $G = mgd$, this can be rewritten in the linear regressor form as:
-\begin{equation}
-    \tau = \begin{bmatrix} \ddot{q} & \dot{q} & \sin q \end{bmatrix} \begin{bmatrix} I \\ F \\ G \end{bmatrix} = Y(q, \dot{q}, \ddot{q})\Theta
-\end{equation}
-where $\Theta = [I, F, G]^T$ is the vector of constant parameters to be estimated.
-
-The adaptive control law replaces the actual coordinates with the reference ones in the regressor matrix and uses the estimated parameters $\hat{\Theta}$:
-\begin{equation}
-    \tau = \hat{I}\ddot{q}_r + \hat{F}\dot{q}_r + \widehat{G} \sin q + K_D\sigma
-    \label{eq:1dof_adaptive_law}
-\end{equation}
-Consequently, the update law for the parameters $\dot{\hat{\Theta}} = \Gamma Y^T \sigma$ becomes:
-\begin{equation}
-    \dot{\hat{\Theta}} = \begin{bmatrix} \dot{\hat{I}} \\ \dot{\hat{F}} \\ \dot{\hat{G}} \end{bmatrix} = \Gamma \begin{bmatrix} \ddot{q}_r \\ \dot{q}_r \\ \sin q \end{bmatrix} \sigma
-\end{equation}
-
-In this case, the $\Theta$ vector is already linear, which simplifies the parameter estimation process. The adaptive control law can directly estimate these physical parameters using the update rule previously described.
-
-
-
-Substituting in the equation of the error signal:
-
-\begin{equation}
-    \tau = I\ddot{q}_r + F\dot{q}_r + mgd \sin q + K_D\sigma
-    \label{eq:adaptive_torque}
-\end{equation}
-
-where $G = mgd \sin q$ represents the gravitational term.
-
-For the first experiment, a sinusoidal trajectory was used. The real parameters $[I, F, G]$ are in order: $[3, 2, -4.164]$, starting from an initial estimation (initial condition of the integral) $[1, 1, -9.81]$.
-
-After an initial discrepancy, the parameters settle down to an almost steady number, and the position and velocity errors approach zero. Note that the parameters may not converge to the real ones, but are inside the null space of $Y(q, \dot{q}, \ddot{q}_r, \ddot{q}_r)$.
-
-It is worth noting that while the gravitational term depends only on the position $q$, the inertial and friction terms in the adaptive control law explicitly depend on the reference trajectory $\dot{q}_r$ and $\ddot{q}_r$. The regressor used for the control law is therefore $Y(q, \dot{q}_r, \ddot{q}_r)$, ensuring that the parameter adaptation is driven by the tracking requirement.
-
-\begin{figure}[H]
-    \centering
-    \makebox[\textwidth][c]{\includegraphics[width=1.5\textwidth]{../Simulink/Images/AdaptiveControl_scheme.png}}
-    \caption{Adaptive control scheme}
-    \label{fig:adaptiveControl_graphh}
-\end{figure}
-
-\begin{figure}[H]
-    \begin{figure}[H]
-        \centering
-        \makebox[\textwidth][c]{\includegraphics[width=1.5\textwidth]{../Simulink/Images/adaptiveControl_pos.png}}
-
-        \vspace{0.5cm}
-
-        \makebox[\textwidth][c]{\includegraphics[width=1.5\textwidth]{../Simulink/Images/adaptiveControl_vel.png}}
-
-        \vspace{0.5cm}
-
-        \makebox[\textwidth][c]{\includegraphics[width=1.5\textwidth]{../Simulink/Images/adaptiveControl_params.png }}
-
-        \vspace{0.5cm}
-
-        \caption{Adaptive control results. From top to bottom: Position tracking ($q$ vs $q_d$); Velocity tracking ($\dot{q}$ vs $\dot{q}_d$); Parameter estimation evolution $\hat{\Theta}(t)$. Note: In the bottom plot, 'param 1' (blue) corresponds to Inertia $\hat{I}$, 'param 2' (red) to Friction $\hat{F}$, and 'param 3' (yellow) to Gravity term $\hat{G}$. The estimates remain bounded as predicted by the theory.}        \label{fig:adaptiveControl_results}
-    \end{figure}
-\end{figure}
 
 
 
