@@ -1,6 +1,6 @@
-PWD c:\Users\luca\Desktop\Materiale_UniVR\08_ADVANCED_CONTROL_SYSTEM\Esercizi\FinalRelationLatex
+PWD c:\Users\luca\Desktop\Materiale_UniVR\08_ADVANCED_CONTROL_SYSTEM\Exercise\FinalRelationLatex
 INPUT C:\Users\luca\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
-INPUT c:\Users\luca\Desktop\Materiale_UniVR\08_ADVANCED_CONTROL_SYSTEM\Esercizi\FinalRelationLatex\finalRelation.tex
+INPUT c:\Users\luca\Desktop\Materiale_UniVR\08_ADVANCED_CONTROL_SYSTEM\Exercise\FinalRelationLatex\finalRelation.tex
 OUTPUT finalRelation.log
 INPUT C:\Users\luca\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
 INPUT C:\Users\luca\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls

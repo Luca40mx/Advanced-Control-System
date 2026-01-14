@@ -1,5 +1,5 @@
 
-function adaptive_control_S_FUNCTION(block)
+function adaptive_control_s_function(block)
 
 setup(block);
 

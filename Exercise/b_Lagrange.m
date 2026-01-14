@@ -326,16 +326,20 @@ syms t;
 
 A = pi/6;
 w = 2;
-phase= pi/6;
+phase= pi/3;
 
-% q_ref = A*sin(w*t+phase);
-q_ref = A*cos(w*t+phase);
+q_ref = A*sin(w*t+phase);
 dq_ref = diff(q_ref);
 ddq_ref = diff(dq_ref);
+
+q_ref = matlabFunction(q_ref,Vars=t);
+dq_ref = matlabFunction(dq_ref,Vars=t);
+ddq_ref = matlabFunction(ddq_ref,Vars=t);
 
 robotStructure.func.q_ref = matlabFunction(q_ref,Vars=t);
 robotStructure.func.dq_ref = matlabFunction(dq_ref,Vars=t);
 robotStructure.func.ddq_ref = matlabFunction(ddq_ref,Vars=t);
+
 
 
 
